@@ -5,7 +5,7 @@ import {
   GetUserByIdResponse,
   CreateUserRequest,
   User,
-} from '../proto/user';
+} from '../protogen/user';
 import { UserRepository } from './user.repository';
 import { PrismaService } from '../../prisma/prisma.service';
 

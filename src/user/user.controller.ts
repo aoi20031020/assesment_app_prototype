@@ -6,7 +6,7 @@ import {
   GetUserByIdResponse,
   CreateUserRequest,
   User,
-} from '../proto/user';
+} from '../protogen/user';
 
 @Controller()
 export class UserController {
