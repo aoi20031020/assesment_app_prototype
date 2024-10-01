@@ -1,0 +1,129 @@
+syntax = "proto3";
+
+package assessment;
+
+service AssessmentService {
+  rpc GetAssessmentByInsuranceNumber(GetAssessmentByInsuranceNumberRequest) returns (GetAssessmentByInsuranceNumberResponse);
+  rpc CreateAssessment(CreateAssessmentRequest) returns (CreateAssessmentResponse);
+}
+
+// GetAssessmentByInsuranceNumberのリクエストメッセージ
+message GetAssessmentByInsuranceNumberRequest {
+    string insuranceNumber = 1; // 被保険者番号
+}
+
+// GetAssessmentByInsuranceNumberのレスポンスメッセージ
+message GetAssessmentByInsuranceNumberResponse {
+    InsuredPerson insuredPerson = 1;
+    EmergencyContact emergencyContact = 2;
+    Contact contact = 3;
+    FamilyStructure familyStructure = 4;
+    ResidenceInfo residenceInfo = 5;
+    ToiletInfo toiletInfo = 6;
+    BathroomInfo bathroomInfo = 7;
+    MobilityInfo mobilityInfo = 8;
+}
+
+// CreateAssessmentのリクエストメッセージ
+message CreateAssessmentRequest {
+    InsuredPerson insuredPerson = 1;
+    EmergencyContact emergencyContact = 2;
+    Contact contact = 3;
+    FamilyStructure familyStructure = 4;
+    ResidenceInfo residenceInfo = 5;
+    ToiletInfo toiletInfo = 6;
+    BathroomInfo bathroomInfo = 7;
+    MobilityInfo mobilityInfo = 8;
+}
+
+// CreateAssessmentのレスポンスメッセージ
+message CreateAssessmentResponse {
+    bool success = 1;
+}
+
+// 被保険者情報
+message InsuredPerson {
+    string insuranceNumber = 1;  // 被保険者番号 (PK)
+    string fullName = 2;         // 本人氏名
+    int32 age = 3;               // 年齢
+    string gender = 4;           // 性別
+    string dependencyEndDate = 5; // 依頼終了日
+    string emergencyContactId = 6; // 緊急連絡先者ID
+    string contactId = 7;        // 相談者連絡先者ID
+    string familyId = 8;         // 家族構成 (FK)
+}
+
+// 緊急連絡先者情報
+message EmergencyContact {
+    string emergencyContactId = 1; // 緊急連絡先者ID (PK)
+    string fullName = 2;           // 緊急連絡先者氏名
+    string relationToInsured = 3;  // 緊急連絡先者と被保険者の関係
+    string gender = 4;             // 緊急連絡先者性別
+    string address = 5;            // 緊急連絡先者住所
+    string phone = 6;              // 緊急連絡先電話番号
+    string relationToSelf = 7;     // 本人との関係
+}
+
+// 相談者情報
+message Contact {
+    string contactId = 1;         // 相談者連絡先者ID (PK)
+    string fullName = 2;          // 相談者氏名
+    string relationToInsured = 3; // 相談者と被保険者の関係
+    string gender = 4;            // 相談者性別
+    string address = 5;           // 相談者住所
+    string phone = 6;             // 相談者電話番号
+    string relationToSelf = 7;    // 本人との関係
+}
+
+// 家族構成情報
+message FamilyStructure {
+    string insuranceNumber = 1; // 被保険者番号 (FK)
+    string familyId = 2;        // 家族ID (PK)
+    string fullName = 3;        // 氏名 (主たる介護者)
+    string gender = 4;          // 性別
+    string status = 5;          // 状況
+    string familyRelationship = 6; // 家族関係
+    string activityStatus = 7;  // 特定事項（自治会・ボランティア等）
+}
+
+// 住宅情報
+message ResidenceInfo {
+    string insuranceNumber = 1;  // 被保険者番号 (FK)
+    string residenceId = 2;      // 住宅情報ID (PK)
+    string householdStatus = 3;  // 戸籍上の住宅状況
+    string situation = 4;        // 住宅の状況
+    bool hasToilet = 5;          // トイレの有無
+    bool hasBath = 6;            // 浴室の有無
+    bool hasLivingRoom = 7;      // 談話室の有無
+    string caretakerId = 8;      // 家政婦
+    string deliveryService = 9;  // 配食サービス
+    string mobilityStatus = 10;  // 移動手段
+}
+
+// トイレ情報
+message ToiletInfo {
+    string insuranceNumber = 1; // 被保険者番号 (FK)
+    string toiletType = 2;      // 和式or洋式orその他
+    bool hasHandrail = 3;       // 手すりの有無
+    bool hasStepsToToilet = 4;  // トイレまでの段差の有無
+}
+
+// 浴室情報
+message BathroomInfo {
+    string insuranceNumber = 1;  // 被保険者番号 (FK)
+    bool hasBathroom = 2;        // 浴室の有無
+    bool hasHandrail = 3;        // 手すりの有無
+    bool hasStepsToBathroom = 4; // 浴室までの段差の有無
+}
+
+// 移動手段情報
+message MobilityInfo {
+    string insuranceNumber = 1;  // 被保険者番号 (FK)
+    bool usesWelfareEquipment = 2; // 福祉機器の使用有無
+    bool usesWheelchair = 3;     // 車いすの有無
+    bool usesElectricWheelchair = 4; // 電動車いすの有無
+    bool usesCane = 5;           // 杖の有無
+    bool canWalk = 6;            // 歩行器の有無
+    string otherMobilityAid = 7; // その他の移動手段
+    bool usesIndoorOrOutdoor = 8; // 室内のみか室外も含むか
+}
