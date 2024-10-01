@@ -17,9 +17,9 @@ export class UserService implements UserServiceController {
   ) {}
 
   async getUserById(request: GetUserByIdRequest): Promise<GetUserByIdResponse> {
-    const user = await this.userRepository.findById(request.id);
+    const user = await this.userRepository.findById(request.id); // リクエストからIDを取得
     if (!user) {
-      throw new Error('User not found');
+      throw new Error('User not found'); // ユーザーが見つからない場合はエラーをスロー
     }
     return { user: this.mapUserToProto(user) };
   }
@@ -28,8 +28,8 @@ export class UserService implements UserServiceController {
     const newUser = await this.userRepository.createUser(
       request.name,
       request.email,
-    );
-    return this.mapUserToProto(newUser);
+    ); // リクエストから名前とメールアドレスを取得
+    return this.mapUserToProto(newUser); // 新しいユーザーを返す
   }
 
   private mapUserToProto(user: any): User {
@@ -43,6 +43,6 @@ export class UserService implements UserServiceController {
           title: post.title,
           content: post.content,
         })) || [],
-    };
+    }; // ユーザーオブジェクトをUserプロトコルバッファにマッピング
   }
 }

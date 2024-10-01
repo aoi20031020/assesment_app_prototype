@@ -1,15 +1,15 @@
 import { NestFactory } from '@nestjs/core';
 import { Transport, GrpcOptions } from '@nestjs/microservices';
 import { join } from 'path';
-import { UserModule } from './user/user.module';
+import { AppModule } from './app.module'; // まとめたAppModuleをインポート
 
 async function bootstrap() {
-  const app = await NestFactory.createMicroservice<GrpcOptions>(UserModule, {
+  const app = await NestFactory.createMicroservice<GrpcOptions>(AppModule, {
     transport: Transport.GRPC,
     options: {
       url: 'localhost:5000',
-      package: 'user',
-      protoPath: join(__dirname, '../proto/user.proto'),
+      package: 'user', // 複数のgRPCサービスを指定
+      protoPath: join(__dirname, '../proto/user.proto'), // protoファイルのパス
     },
   });
   await app.listen();
