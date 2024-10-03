@@ -9,16 +9,54 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  name  String
-  email String  @unique
-  posts Post[]
+  id    　　　　　　Int     @id @unique
+  name  　　　　　　String
+  telephonenumber Int 
+  mobilenumbeer   Int 
+  age             Int
+  sex             Boolean
+  adress          String
+  Requesteddate   DateTime
+  familly Families @relation(fields: [familyId], references: [id])
+  familyId        Int @unique
+  emergencycontact　Emergencycontact?
+  consulter        Consulter?
 }
 
-model Post {
-  id      Int     @id @default(autoincrement())
-  title   String
-  content String?
-  userId  Int
-  user    User    @relation(fields: [userId], references: [id])
+model Families {
+  id     Int @id @unique
+  name           String
+  relationship　 String
+  livingseparately String
+  employment　String
+  condition String
+  memo  String
+  user User?
 }
+
+model Emergencycontact {
+  id    　　　　　　Int     @id @unique
+  name  　　　　　　String
+  age             Int
+  sex             Boolean
+  telephonenumber Int
+  mobilenumbeer   Int 
+  adress          String
+  relationship    String
+  emergency User @relation(fields: [emergencyId], references: [id])
+  emergencyId     Int @unique
+}
+
+model Consulter {
+  id    　　　　　　Int     @id @unique
+  name  　　　　　　String
+  age             Int
+  sex             Boolean
+  telephonenumber Int
+  mobilenumbeer   Int 
+  adress          String
+  relationship    String
+  consulter User @relation(fields: [consulterId], references: [id])
+  consulterId    Int @unique
+}
+
