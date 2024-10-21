@@ -17,50 +17,50 @@ model User {
   sex             Boolean
   adress          String
   Requesteddate   DateTime
-  familly Families @relation(fields: [familyId], references: [id])
-  familyId        Int @unique
-  emergencycontact　Emergencycontact?
-  consulter        Consulter?
-  home            Home?
+  emergencycontact　Emergencycontact　@relation(fields: [emergencyId], references: [emergencyId])
+  emergencyId     Int @unique
+  consulter        Consulter　@relation(fields: [consulterId], references: [consulterId])
+  consulterId     Int @unique
+  familly Families? 
+  home Home?           
+}
+
+model Emergencycontact {
+  emergencyId     Int   @id 
+  name  　　　　　　String
+  age             Int
+  sex             Boolean
+  telephonenumber Int
+  mobilenumbeer   Int 
+  adress          String
+  relationship    String
+  user User?
+}
+
+model Consulter {
+  consulterId     Int      @id
+  name  　　　　　　String
+  age             Int
+  sex             Boolean
+  telephonenumber Int
+  mobilenumbeer   Int 
+  adress          String
+  relationship    String
+  user User?
 }
 
 
-
 model Families {
-  id     Int @id @unique
+  familyId     Int  @unique
   name           String
   relationship　 String
   livingseparately String
   employment　String
   condition String
   memo  String
-  user User?
-}
-
-model Emergencycontact {
-  id    　　　　　　Int     @id 
-  name  　　　　　　String
-  age             Int
-  sex             Boolean
-  telephonenumber Int
-  mobilenumbeer   Int 
-  adress          String
-  relationship    String
-  emergency User @relation(fields: [emergencyId], references: [insuredId])
-  emergencyId     Int @unique
-}
-
-model Consulter {
-  id    　　　　　　Int     @id @unique
-  name  　　　　　　String
-  age             Int
-  sex             Boolean
-  telephonenumber Int
-  mobilenumbeer   Int 
-  adress          String
-  relationship    String
-  consulter User @relation(fields: [consulterId], references: [insuredId])
-  consulterId    Int @unique
+  user User  @relation(fields: [userId], references: [insuredId])
+  userId Int @unique
+  @@id([userId, familyId])
 }
 
 model Home {
