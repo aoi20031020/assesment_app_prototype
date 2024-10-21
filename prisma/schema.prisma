@@ -9,7 +9,7 @@ datasource db {
 }
 
 model User {
-  id    　　　　　　Int     @id @unique
+  insuredId Int @id @default(autoincrement())
   name  　　　　　　String
   telephonenumber Int 
   mobilenumbeer   Int 
@@ -21,7 +21,10 @@ model User {
   familyId        Int @unique
   emergencycontact　Emergencycontact?
   consulter        Consulter?
+  home            Home?
 }
+
+
 
 model Families {
   id     Int @id @unique
@@ -35,7 +38,7 @@ model Families {
 }
 
 model Emergencycontact {
-  id    　　　　　　Int     @id @unique
+  id    　　　　　　Int     @id 
   name  　　　　　　String
   age             Int
   sex             Boolean
@@ -43,7 +46,7 @@ model Emergencycontact {
   mobilenumbeer   Int 
   adress          String
   relationship    String
-  emergency User @relation(fields: [emergencyId], references: [id])
+  emergency User @relation(fields: [emergencyId], references: [insuredId])
   emergencyId     Int @unique
 }
 
@@ -56,7 +59,16 @@ model Consulter {
   mobilenumbeer   Int 
   adress          String
   relationship    String
-  consulter User @relation(fields: [consulterId], references: [id])
+  consulter User @relation(fields: [consulterId], references: [insuredId])
   consulterId    Int @unique
+}
+
+model Home {
+  homeId Int @unique
+  style     String
+  memo      String
+  user User @relation(fields: [userId], references: [insuredId])
+  userId Int @unique
+  @@id([userId, homeId])
 }
 
