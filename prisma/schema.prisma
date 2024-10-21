@@ -34,7 +34,7 @@ model Emergencycontact {
   mobilenumbeer   Int 
   adress          String
   relationship    String
-  user User?
+  user User[]
 }
 
 model Consulter {
@@ -46,7 +46,7 @@ model Consulter {
   mobilenumbeer   Int 
   adress          String
   relationship    String
-  user User?
+  user User[]
 }
 
 
