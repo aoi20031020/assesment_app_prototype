@@ -22,7 +22,12 @@ model User {
   consulter        Consulter　@relation(fields: [consulterId], references: [consulterId])
   consulterId     Int @unique
   familly Families? 
-  home Home?           
+  home Home?   
+  room Room? 
+  movement Movement? 
+  equipment Equipment?
+  toilet Toilet?
+  bathroom Bathroom?
 }
 
 model Emergencycontact {
@@ -70,5 +75,53 @@ model Home {
   user User @relation(fields: [userId], references: [insuredId])
   userId Int @unique
   @@id([userId, homeId])
+}
+
+model Room {
+  user User @relation(fields: [userId], references: [insuredId])
+  userId Int @id @unique
+  myroom  Boolean
+  floor   Int
+  elevator　Boolean
+  bed String
+  electricbed　String
+  sunshine　Boolean
+  heater Boolean
+  cooler Boolean
+}
+
+model Movement {
+  user User @relation(fields: [userId], references: [insuredId])
+  userId Int @id @unique
+  assistivetechnology Boolean
+  wheelchair Boolean
+  electricwheelchair Boolean
+  stick Boolean
+  walker　Boolean
+  else String?
+  indoor Boolean
+}
+
+model Equipment {
+  user User @relation(fields: [userId], references: [insuredId])
+  userId Int @id @unique
+  cooktop Boolean
+  heater  String
+}
+
+model Toilet {
+  user User @relation(fields: [userId], references: [insuredId])
+  userId   Int  @id @unique
+  style    String
+  handrail Boolean
+  step     Boolean
+}
+
+model Bathroom {
+  user User @relation(fields: [userId], references: [insuredId])
+  userId          Int  @id @unique
+  existence Boolean
+  handrail  Boolean
+  step      Boolean
 }
 
