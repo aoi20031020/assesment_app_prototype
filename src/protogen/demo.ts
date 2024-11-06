@@ -2,13 +2,20 @@
 // versions:
 //   protoc-gen-ts_proto  v2.2.0
 //   protoc               v3.12.4
-// source: user.proto
+// source: demo.proto
 
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
 
-export const protobufPackage = "user";
+export const protobufPackage = "demo";
+
+export interface GetAllUserRequest {
+}
+
+export interface GetAllUserResponse {
+  users: User[];
+}
 
 export interface GetUserByIdRequest {
   id: number;
@@ -20,51 +27,66 @@ export interface GetUserByIdResponse {
 
 export interface CreateUserRequest {
   name: string;
+  age: number;
   email: string;
+}
+
+export interface DeleteUserRequest {
+  id: number;
+}
+
+export interface DeleteUserResponse {
+  success: boolean;
 }
 
 export interface User {
   id: number;
   name: string;
+  age: number;
   email: string;
-  posts: Post[];
 }
 
-export interface Post {
-  id: number;
-  title: string;
-  content: string;
-}
+export const DEMO_PACKAGE_NAME = "demo";
 
-export const USER_PACKAGE_NAME = "user";
+export interface DemoServiceClient {
+  getAllUser(request: GetAllUserRequest): Observable<GetAllUserResponse>;
 
-export interface UserServiceClient {
   getUserById(request: GetUserByIdRequest): Observable<GetUserByIdResponse>;
 
   createUser(request: CreateUserRequest): Observable<User>;
+
+  deleteUser(request: DeleteUserRequest): Observable<DeleteUserResponse>;
 }
 
-export interface UserServiceController {
+export interface DemoServiceController {
+  getAllUser(
+    request: GetAllUserRequest,
+  ): Promise<GetAllUserResponse> | Observable<GetAllUserResponse> | GetAllUserResponse;
+
   getUserById(
     request: GetUserByIdRequest,
   ): Promise<GetUserByIdResponse> | Observable<GetUserByIdResponse> | GetUserByIdResponse;
 
   createUser(request: CreateUserRequest): Promise<User> | Observable<User> | User;
+
+  deleteUser(
+    request: DeleteUserRequest,
+  ): Promise<DeleteUserResponse> | Observable<DeleteUserResponse> | DeleteUserResponse;
 }
 
-export function UserServiceControllerMethods() {
+export function DemoServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["getUserById", "createUser"];
+    const grpcMethods: string[] = ["getAllUser", "getUserById", "createUser", "deleteUser"];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-      GrpcMethod("UserService", method)(constructor.prototype[method], method, descriptor);
+      GrpcMethod("DemoService", method)(constructor.prototype[method], method, descriptor);
     }
     const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-      GrpcStreamMethod("UserService", method)(constructor.prototype[method], method, descriptor);
+      GrpcStreamMethod("DemoService", method)(constructor.prototype[method], method, descriptor);
     }
   };
 }
 
-export const USER_SERVICE_NAME = "UserService";
+export const DEMO_SERVICE_NAME = "DemoService";

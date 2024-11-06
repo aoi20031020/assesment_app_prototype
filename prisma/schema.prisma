@@ -1,4 +1,3 @@
-// prisma/schema.prisma
 generator client {
   provider = "prisma-client-js"
 }
@@ -6,6 +5,13 @@ generator client {
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model Demo {
+  id    Int    @id @default(autoincrement())
+  name  String
+  age   Int
+  email String
 }
 
 model User {
