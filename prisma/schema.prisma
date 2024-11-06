@@ -182,7 +182,6 @@ enum Leber {
   VALUE5
 }
 
-
 model Disabilitynotebook {
 possess Boolean
 grade Int
