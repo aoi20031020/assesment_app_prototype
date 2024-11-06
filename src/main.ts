@@ -8,8 +8,8 @@ async function bootstrap() {
     transport: Transport.GRPC,
     options: {
       url: 'localhost:5000',
-      package: 'user', // 複数のgRPCサービスを指定
-      protoPath: join(__dirname, '../proto/user.proto'), // protoファイルのパス
+      package: 'demo', // 複数のgRPCサービスを指定
+      protoPath: join(__dirname, '../proto/demo.proto'), // protoファイルのパス
     },
   });
   await app.listen();
