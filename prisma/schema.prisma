@@ -15,53 +15,232 @@ model Demo {
 }
 
 model User {
-  id               Int               @id @unique
-  name             String
-  telephonenumber  Int
-  mobilenumbeer    Int
-  age              Int
-  sex              Boolean
-  adress           String
-  Requesteddate    DateTime
-  familyId         Int               @unique
-  Consulter        Consulter?
-  Emergencycontact Emergencycontact?
-  Families         Families          @relation(fields: [familyId], references: [id])
-}
-
-model Consulter {
-  id              Int     @id @unique
-  name            String
+  id Int @unique
+  insuredId Int @id @default(autoincrement())
+  name  　　　　　　String
+  telephonenumber Int 
+  mobilenumbeer   Int 
   age             Int
   sex             Boolean
-  telephonenumber Int
-  mobilenumbeer   Int
   adress          String
-  relationship    String
-  consulterId     Int     @unique
-  User            User    @relation(fields: [consulterId], references: [id])
+  Requesteddate   DateTime
+  emergencycontact　Emergencycontact　@relation(fields: [emergencyId], references: [emergencyId])
+  emergencyId     Int @unique
+  consulter        Consulter　@relation(fields: [consulterId], references: [consulterId])
+  consulterId     Int @unique
+  familly Families? 
+  home Home?   
+  room Room? 
+  movement Movement? 
+  equipment Equipment?
+  toilet Toilet?
+  bathroom Bathroom?
 }
 
 model Emergencycontact {
-  id              Int     @id @unique
-  name            String
+  id Int @unique 
+  emergencyId     Int   @id 
+  name  　　　　　　String
   age             Int
   sex             Boolean
   telephonenumber Int
-  mobilenumbeer   Int
+  mobilenumbeer   Int 
   adress          String
   relationship    String
-  emergencyId     Int     @unique
-  User            User    @relation(fields: [emergencyId], references: [id])
+  user User[]
 }
 
+model Consulter {
+  id              Int @unique
+  consulterId     Int      @id
+  name  　　　　　　String
+  age             Int
+  sex             Boolean
+  telephonenumber Int
+  mobilenumbeer   Int 
+  adress          String
+  relationship    String
+  user User[]
+}
+
+
 model Families {
-  id               Int    @id @unique
-  name             String
-  relationship     String
+  id           Int @unique
+  familyId     Int  @unique
+  name           String
+  relationship　 String
   livingseparately String
-  employment       String
-  condition        String
-  memo             String
-  User             User?
+  employment　String
+  condition String
+  memo  String
+  user User  @relation(fields: [userId], references: [insuredId])
+  userId Int @unique
+  @@id([userId, familyId])
+}
+
+model Home {
+  id     Int @unique
+  homeId Int @unique
+  style     String
+  memo      String
+  user User @relation(fields: [userId], references: [insuredId])
+  userId Int @unique
+  @@id([userId, homeId])
+}
+
+model Room {
+  id  Int @unique
+  user User @relation(fields: [userId], references: [insuredId])
+  userId Int @id @unique
+  myroom  Boolean
+  floor   Int
+  elevator　Boolean
+  bed String
+  electricbed　String
+  sunshine　Boolean
+  heater Boolean
+  cooler Boolean
+}
+
+model Movement {
+  id Int @unique
+  user User @relation(fields: [userId], references: [insuredId])
+  userId Int @id @unique
+  assistivetechnology Boolean
+  wheelchair Boolean
+  electricwheelchair Boolean
+  stick Boolean
+  walker　Boolean
+  else String?
+  indoor Boolean
+}
+
+model Equipment {
+  user User @relation(fields: [userId], references: [insuredId])
+  userId Int @id @unique
+  cooktop Boolean
+  heater  String
+}
+
+model Toilet {
+  id Int @unique
+  user User @relation(fields: [userId], references: [insuredId])
+  userId   Int  @id @unique
+  style    String
+  handrail Boolean
+  step     Boolean
+}
+
+model Bathroom {
+  id Int @unique
+  user User @relation(fields: [userId], references: [insuredId])
+  userId          Int  @id @unique
+  existence Boolean
+  handrail  Boolean
+  step      Boolean
+}
+
+model Service {
+id Int @unique
+insuredId Int @id @default(autoincrement()) 
+name String
+date   DateTime
+using Using[] 
+wants Wants[]
+eigibility Eigibility[]
+disabilitynotebook Disabilitynotebook[]
+specialeducationrecordbook Specialeducationrecordbook[]
+mentaldisabilitycertificate Mentaldisabilitycertificate[]
+independencesupportmedicalexpenses Independencesupportmedicalexpenses[]
+dailylifeindependenceLevel DailylifeindependenceLevel[]
+athome Athome[]
+
+}
+
+model Using {
+id Int @unique
+detail  String
+provider String
+memo String
+user  Service 　@relation(fields: [userId], references: [insuredId])
+userId Int @id @unique
+}
+
+model Wants {
+id Int @unique
+detail  String
+provider String
+memo String
+user  Service 　@relation(fields: [userId], references: [insuredId])
+userId Int  @id @unique
+}
+
+model Eigibility {
+id Int @unique
+done Boolean
+type String
+lebel Leber?
+date DateTime
+user  Service 　@relation(fields: [userId], references: [insuredId])
+userId Int @id @unique
+}
+
+enum Leber {
+  VALUE1
+  VALUE2
+  VALUE3
+  VALUE4
+  VALUE5
+}
+
+
+model Disabilitynotebook {
+id Int @unique
+possess Boolean
+grade Int
+date DateTime
+user  Service 　@relation(fields: [userId], references: [insuredId])
+userId Int @id @unique
+}
+
+model Specialeducationrecordbook {
+id Int @unique
+possess Boolean
+grade Int
+date DateTime
+user  Service 　@relation(fields: [userId], references: [insuredId])
+userId Int @id @unique
+}
+
+model Mentaldisabilitycertificate {
+  id Int @unique
+  possess Boolean
+  grade Int
+  date DateTime
+  user  Service 　@relation(fields: [userId], references: [insuredId])
+  userId Int @id @unique
+}
+
+model Independencesupportmedicalexpenses {
+  id Int @unique
+  possess Boolean
+  grade Int
+  user  Service 　@relation(fields: [userId], references: [insuredId])
+  userId Int @id @unique
+}
+
+model DailylifeindependenceLevel {
+  id Int @unique
+  disabledelderly String
+  dementia       String
+  user  Service 　@relation(fields: [userId], references: [insuredId])
+  userId Int @id @unique
+}
+
+model Athome {
+id  Int @unique
+menu String
+date DateTime
+user  Service 　@relation(fields: [userId], references: [insuredId])
+userId Int @id @unique
 }
