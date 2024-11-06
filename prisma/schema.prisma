@@ -15,7 +15,6 @@ model Demo {
 }
 
 model User {
-  id Int @unique
   insuredId Int @id @default(autoincrement())
   name  　　　　　　String
   telephonenumber Int 
@@ -38,7 +37,6 @@ model User {
 }
 
 model Emergencycontact {
-  id Int @unique 
   emergencyId     Int   @id 
   name  　　　　　　String
   age             Int
@@ -51,7 +49,6 @@ model Emergencycontact {
 }
 
 model Consulter {
-  id              Int @unique
   consulterId     Int      @id
   name  　　　　　　String
   age             Int
@@ -65,7 +62,6 @@ model Consulter {
 
 
 model Families {
-  id           Int @unique
   familyId     Int  @unique
   name           String
   relationship　 String
@@ -79,7 +75,6 @@ model Families {
 }
 
 model Home {
-  id     Int @unique
   homeId Int @unique
   style     String
   memo      String
@@ -89,7 +84,6 @@ model Home {
 }
 
 model Room {
-  id  Int @unique
   user User @relation(fields: [userId], references: [insuredId])
   userId Int @id @unique
   myroom  Boolean
@@ -103,7 +97,6 @@ model Room {
 }
 
 model Movement {
-  id Int @unique
   user User @relation(fields: [userId], references: [insuredId])
   userId Int @id @unique
   assistivetechnology Boolean
@@ -123,7 +116,6 @@ model Equipment {
 }
 
 model Toilet {
-  id Int @unique
   user User @relation(fields: [userId], references: [insuredId])
   userId   Int  @id @unique
   style    String
@@ -132,7 +124,6 @@ model Toilet {
 }
 
 model Bathroom {
-  id Int @unique
   user User @relation(fields: [userId], references: [insuredId])
   userId          Int  @id @unique
   existence Boolean
@@ -140,8 +131,8 @@ model Bathroom {
   step      Boolean
 }
 
+
 model Service {
-id Int @unique
 insuredId Int @id @default(autoincrement()) 
 name String
 date   DateTime
@@ -158,7 +149,6 @@ athome Athome[]
 }
 
 model Using {
-id Int @unique
 detail  String
 provider String
 memo String
@@ -167,7 +157,6 @@ userId Int @id @unique
 }
 
 model Wants {
-id Int @unique
 detail  String
 provider String
 memo String
@@ -195,7 +184,6 @@ enum Leber {
 
 
 model Disabilitynotebook {
-id Int @unique
 possess Boolean
 grade Int
 date DateTime
@@ -204,7 +192,6 @@ userId Int @id @unique
 }
 
 model Specialeducationrecordbook {
-id Int @unique
 possess Boolean
 grade Int
 date DateTime
@@ -213,7 +200,6 @@ userId Int @id @unique
 }
 
 model Mentaldisabilitycertificate {
-  id Int @unique
   possess Boolean
   grade Int
   date DateTime
@@ -222,7 +208,6 @@ model Mentaldisabilitycertificate {
 }
 
 model Independencesupportmedicalexpenses {
-  id Int @unique
   possess Boolean
   grade Int
   user  Service 　@relation(fields: [userId], references: [insuredId])
@@ -230,7 +215,6 @@ model Independencesupportmedicalexpenses {
 }
 
 model DailylifeindependenceLevel {
-  id Int @unique
   disabledelderly String
   dementia       String
   user  Service 　@relation(fields: [userId], references: [insuredId])
@@ -238,9 +222,36 @@ model DailylifeindependenceLevel {
 }
 
 model Athome {
-id  Int @unique
 menu String
 date DateTime
 user  Service 　@relation(fields: [userId], references: [insuredId])
 userId Int @id @unique
 }
+
+model Medical {
+id Int @id@default(autoincrement())
+height Int 
+weight Int
+correctanswer Tooth
+memo String
+}
+
+enum Tooth{
+has
+no
+fulldentures
+partialdentures
+}
+
+model Disease{
+id Int @id@default(autoincrement())
+name String
+outbreak String
+frequency String
+hospitalname String
+hospitalphonenumber Int
+department String
+pcp String
+note String
+}
+
