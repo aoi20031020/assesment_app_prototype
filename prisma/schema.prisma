@@ -2,6 +2,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator erd {
+  provider = "prisma-erd-generator"
+  output   = "./ERD"
+}
+
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
@@ -15,166 +20,245 @@ model Demo {
 }
 
 model User {
-  insuredId Int @id @default(autoincrement())
-  name  　　　　　　String
-  telephonenumber Int 
-  mobilenumbeer   Int 
-  age             Int
-  sex             Boolean
-  adress          String
-  Requesteddate   DateTime
-  emergencycontact　Emergencycontact　@relation(fields: [emergencyId], references: [emergencyId])
-  emergencyId     Int @unique
-  consulter        Consulter　@relation(fields: [consulterId], references: [consulterId])
-  consulterId     Int @unique
-  familly Families? 
-  home Home?   
-  room Room? 
-  movement Movement? 
-  equipment Equipment?
-  toilet Toilet?
-  bathroom Bathroom?
+  id               Int               @id @default(autoincrement())
+  insuredId        Int               @unique
+  name             String
+  telephoneNumber  String
+  mobileNumber     String
+  age              Int
+  sex              Boolean
+  address          String
+  requestedDate    DateTime
+  emergencyId      Int?
+  consulterId      Int?
+  bathroom         Bathroom?
+  equipment        Equipment?
+  family           Family?
+  home             Home?
+  movement         Movement?
+  room             Room?
+  toilet           Toilet?
+  consulter        Consulter?        @relation(fields: [consulterId], references: [id])
+  emergencyContact EmergencyContact? @relation(fields: [emergencyId], references: [id])
+
+  @@index([consulterId], map: "User_consulterId_fkey")
+  @@index([emergencyId], map: "User_emergencyId_fkey")
 }
 
-model Emergencycontact {
-  emergencyId     Int   @id 
-  name  　　　　　　String
+model EmergencyContact {
+  id              Int     @id @default(autoincrement())
+  name            String
   age             Int
   sex             Boolean
-  telephonenumber Int
-  mobilenumbeer   Int 
-  adress          String
+  telephoneNumber String
+  mobileNumber    String
+  address         String
   relationship    String
-  user User[]
+  users           User[]
 }
 
 model Consulter {
-  consulterId     Int      @id
-  name  　　　　　　String
+  id              Int     @id @default(autoincrement())
+  name            String
   age             Int
   sex             Boolean
-  telephonenumber Int
-  mobilenumbeer   Int 
-  adress          String
+  telephoneNumber String
+  mobileNumber    String
+  address         String
   relationship    String
-  user User[]
+  users           User[]
 }
 
-
-model Families {
-  familyId     Int  @unique
-  name           String
-  relationship　 String
-  livingseparately String
-  employment　String
-  condition String
-  memo  String
-  user User  @relation(fields: [userId], references: [insuredId])
-  userId Int @unique
-  @@id([userId, familyId])
+model Family {
+  id               Int    @id @default(autoincrement())
+  userId           Int    @unique
+  familyId         Int    @unique
+  name             String
+  relationship     String
+  livingSeparately String
+  employment       String
+  condition        String
+  memo             String
+  user             User   @relation(fields: [userId], references: [insuredId])
 }
 
 model Home {
-  homeId Int @unique
-  style     String
-  memo      String
-  user User @relation(fields: [userId], references: [insuredId])
-  userId Int @unique
-  @@id([userId, homeId])
+  id     Int    @id @default(autoincrement())
+  userId Int    @unique
+  style  String
+  memo   String
+  user   User   @relation(fields: [userId], references: [insuredId])
 }
 
 model Room {
-  user User @relation(fields: [userId], references: [insuredId])
-  userId Int @id @unique
-  myroom  Boolean
-  floor   Int
-  elevator　Boolean
-  bed String
-  electricbed　String
-  sunshine　Boolean
-  heater Boolean
-  cooler Boolean
+  id          Int     @id @default(autoincrement())
+  userId      Int     @unique
+  myRoom      Boolean
+  floor       Int
+  elevator    Boolean
+  bed         String
+  electricBed String
+  sunshine    Boolean
+  heater      Boolean
+  cooler      Boolean
+  user        User    @relation(fields: [userId], references: [insuredId])
 }
 
 model Movement {
-  user User @relation(fields: [userId], references: [insuredId])
-  userId Int @id @unique
-  assistivetechnology Boolean
-  wheelchair Boolean
-  electricwheelchair Boolean
-  stick Boolean
-  walker　Boolean
-  else String?
-  indoor Boolean
+  id                  Int     @id @default(autoincrement())
+  userId              Int     @unique
+  assistiveTechnology Boolean
+  wheelchair          Boolean
+  electricWheelchair  Boolean
+  stick               Boolean
+  walker              Boolean
+  other               String?
+  indoor              Boolean
+  user                User    @relation(fields: [userId], references: [insuredId])
 }
 
 model Equipment {
-  user User @relation(fields: [userId], references: [insuredId])
-  userId Int @id @unique
+  id      Int     @id @default(autoincrement())
+  userId  Int     @unique
   cooktop Boolean
   heater  String
+  user    User    @relation(fields: [userId], references: [insuredId])
 }
 
 model Toilet {
-  user User @relation(fields: [userId], references: [insuredId])
-  userId   Int  @id @unique
+  id       Int     @id @default(autoincrement())
+  userId   Int     @unique
   style    String
   handrail Boolean
   step     Boolean
+  user     User    @relation(fields: [userId], references: [insuredId])
 }
 
 model Bathroom {
-  user User @relation(fields: [userId], references: [insuredId])
-  userId          Int  @id @unique
+  id        Int     @id @default(autoincrement())
+  userId    Int     @unique
   existence Boolean
   handrail  Boolean
   step      Boolean
+  user      User    @relation(fields: [userId], references: [insuredId])
 }
 
-
 model Service {
-insuredId Int @id @default(autoincrement()) 
-name String
-date   DateTime
-using Using[] 
-wants Wants[]
-eigibility Eigibility[]
-disabilitynotebook Disabilitynotebook[]
-specialeducationrecordbook Specialeducationrecordbook[]
-mentaldisabilitycertificate Mentaldisabilitycertificate[]
-independencesupportmedicalexpenses Independencesupportmedicalexpenses[]
-dailylifeindependenceLevel DailylifeindependenceLevel[]
-athome Athome[]
-
+  id                                 Int                                 @id @default(autoincrement())
+  insuredId                          Int                                 @unique
+  name                               String
+  date                               DateTime
+  athome                             AtHome?
+  dailylifeindependenceLevel         DailyLifeIndependenceLevel?
+  disabilitynotebook                 DisabilityNotebook?
+  eligibility                        Eligibility?
+  independencesupportmedicalexpenses IndependenceSupportMedicalExpenses?
+  mentaldisabilitycertificate        MentalDisabilityCertificate?
+  specialeducationrecordbook         SpecialEducationRecordBook?
+  using                              Using?
+  wants                              Wants?
 }
 
 model Using {
-detail  String
-provider String
-memo String
-user  Service 　@relation(fields: [userId], references: [insuredId])
-userId Int @id @unique
+  id       Int     @id @default(autoincrement())
+  userId   Int     @unique
+  detail   String
+  provider String
+  memo     String
+  user     Service @relation(fields: [userId], references: [insuredId])
 }
 
 model Wants {
-detail  String
-provider String
-memo String
-user  Service 　@relation(fields: [userId], references: [insuredId])
-userId Int  @id @unique
+  id       Int     @id @default(autoincrement())
+  userId   Int     @unique
+  detail   String
+  provider String
+  memo     String
+  user     Service @relation(fields: [userId], references: [insuredId])
 }
 
-model Eigibility {
-id Int @unique
-done Boolean
-type String
-lebel Leber?
-date DateTime
-user  Service 　@relation(fields: [userId], references: [insuredId])
-userId Int @id @unique
+model Eligibility {
+  id        Int      @id @default(autoincrement())
+  serviceId Int      @unique
+  type      String
+  done      Boolean
+  level     Level?
+  date      DateTime
+  service   Service  @relation(fields: [serviceId], references: [insuredId])
 }
 
-enum Leber {
+model DisabilityNotebook {
+  id      Int      @id @default(autoincrement())
+  userId  Int      @unique
+  possess Boolean
+  grade   Int
+  date    DateTime
+  user    Service  @relation(fields: [userId], references: [insuredId])
+}
+
+model SpecialEducationRecordBook {
+  id      Int      @id @default(autoincrement())
+  userId  Int      @unique
+  possess Boolean
+  grade   Int
+  date    DateTime
+  user    Service  @relation(fields: [userId], references: [insuredId])
+}
+
+model MentalDisabilityCertificate {
+  id      Int      @id @default(autoincrement())
+  userId  Int      @unique
+  possess Boolean
+  grade   Int
+  date    DateTime
+  user    Service  @relation(fields: [userId], references: [insuredId])
+}
+
+model IndependenceSupportMedicalExpenses {
+  id      Int     @id @default(autoincrement())
+  userId  Int     @unique
+  possess Boolean
+  grade   Int
+  user    Service @relation(fields: [userId], references: [insuredId])
+}
+
+model DailyLifeIndependenceLevel {
+  id              Int     @id @default(autoincrement())
+  userId          Int     @unique
+  disabledElderly String
+  dementia        String
+  user            Service @relation(fields: [userId], references: [insuredId])
+}
+
+model AtHome {
+  id     Int      @id @default(autoincrement())
+  userId Int      @unique
+  menu   String
+  date   DateTime
+  user   Service  @relation(fields: [userId], references: [insuredId])
+}
+
+model Medical {
+  id     Int    @id @default(autoincrement())
+  height Int
+  weight Int
+  tooth  Tooth
+  memo   String
+}
+
+model Disease {
+  id                  Int    @id @default(autoincrement())
+  name                String
+  outbreak            String
+  frequency           String
+  hospitalName        String
+  hospitalPhoneNumber String
+  department          String
+  pcp                 String
+  note                String
+}
+
+enum Level {
   VALUE1
   VALUE2
   VALUE3
@@ -182,75 +266,9 @@ enum Leber {
   VALUE5
 }
 
-model Disabilitynotebook {
-possess Boolean
-grade Int
-date DateTime
-user  Service 　@relation(fields: [userId], references: [insuredId])
-userId Int @id @unique
+enum Tooth {
+  HAS
+  NO
+  FULL_DENTURES
+  PARTIAL_DENTURES
 }
-
-model Specialeducationrecordbook {
-possess Boolean
-grade Int
-date DateTime
-user  Service 　@relation(fields: [userId], references: [insuredId])
-userId Int @id @unique
-}
-
-model Mentaldisabilitycertificate {
-  possess Boolean
-  grade Int
-  date DateTime
-  user  Service 　@relation(fields: [userId], references: [insuredId])
-  userId Int @id @unique
-}
-
-model Independencesupportmedicalexpenses {
-  possess Boolean
-  grade Int
-  user  Service 　@relation(fields: [userId], references: [insuredId])
-  userId Int @id @unique
-}
-
-model DailylifeindependenceLevel {
-  disabledelderly String
-  dementia       String
-  user  Service 　@relation(fields: [userId], references: [insuredId])
-  userId Int @id @unique
-}
-
-model Athome {
-menu String
-date DateTime
-user  Service 　@relation(fields: [userId], references: [insuredId])
-userId Int @id @unique
-}
-
-model Medical {
-id Int @id@default(autoincrement())
-height Int 
-weight Int
-correctanswer Tooth
-memo String
-}
-
-enum Tooth{
-has
-no
-fulldentures
-partialdentures
-}
-
-model Disease{
-id Int @id@default(autoincrement())
-name String
-outbreak String
-frequency String
-hospitalname String
-hospitalphonenumber Int
-department String
-pcp String
-note String
-}
-
