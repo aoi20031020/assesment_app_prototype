@@ -10,6 +10,25 @@ import { Observable } from "rxjs";
 
 export const protobufPackage = "assessment";
 
+/** Level enum */
+export enum Level {
+  VALUE1 = 0,
+  VALUE2 = 1,
+  VALUE3 = 2,
+  VALUE4 = 3,
+  VALUE5 = 4,
+  UNRECOGNIZED = -1,
+}
+
+/** Tooth enum */
+export enum Tooth {
+  HAS = 0,
+  NO = 1,
+  FULL_DENTURES = 2,
+  PARTIAL_DENTURES = 3,
+  UNRECOGNIZED = -1,
+}
+
 /** GetAssessmentByInsuranceNumberのリクエストメッセージ */
 export interface GetAssessmentByInsuranceNumberRequest {
   /** 被保険者番号 */
@@ -18,173 +37,246 @@ export interface GetAssessmentByInsuranceNumberRequest {
 
 /** GetAssessmentByInsuranceNumberのレスポンスメッセージ */
 export interface GetAssessmentByInsuranceNumberResponse {
-  insuredPerson: InsuredPerson | undefined;
+  user: User | undefined;
   emergencyContact: EmergencyContact | undefined;
-  contact: Contact | undefined;
-  familyStructure: FamilyStructure | undefined;
-  residenceInfo: ResidenceInfo | undefined;
-  toiletInfo: ToiletInfo | undefined;
-  bathroomInfo: BathroomInfo | undefined;
-  mobilityInfo: MobilityInfo | undefined;
+  consulter: Consulter | undefined;
+  family: Family | undefined;
+  home: Home | undefined;
+  room: Room | undefined;
+  movement: Movement | undefined;
+  equipment: Equipment | undefined;
+  toilet: Toilet | undefined;
+  bathroom: Bathroom | undefined;
 }
 
 /** CreateAssessmentのリクエストメッセージ */
 export interface CreateAssessmentRequest {
-  insuredPerson: InsuredPerson | undefined;
-  emergencyContact: EmergencyContact | undefined;
-  contact: Contact | undefined;
-  familyStructure: FamilyStructure | undefined;
-  residenceInfo: ResidenceInfo | undefined;
-  toiletInfo: ToiletInfo | undefined;
-  bathroomInfo: BathroomInfo | undefined;
-  mobilityInfo: MobilityInfo | undefined;
+  user: User | undefined;
+  service: Service | undefined;
 }
 
 /** CreateAssessmentのレスポンスメッセージ */
 export interface CreateAssessmentResponse {
-  success: boolean;
+  user: User | undefined;
+  service: Service | undefined;
 }
 
-/** 被保険者情報 */
-export interface InsuredPerson {
-  /** 被保険者番号 (PK) */
-  insuranceNumber: string;
-  /** 本人氏名 */
-  fullName: string;
-  /** 年齢 */
+/** Userメッセージ */
+export interface User {
+  id: number;
+  insuredId: number;
+  name: string;
+  telephoneNumber: string;
+  mobileNumber: string;
   age: number;
-  /** 性別 */
-  gender: string;
-  /** 依頼終了日 */
-  dependencyEndDate: string;
-  /** 緊急連絡先者ID */
-  emergencyContactId: string;
-  /** 相談者連絡先者ID */
-  contactId: string;
-  /** 家族構成 (FK) */
-  familyId: string;
+  sex: boolean;
+  address: string;
+  requestedDate: string;
+  emergencyId: number;
+  consulterId: number;
+  bathroom: Bathroom | undefined;
+  equipment: Equipment | undefined;
+  family: Family | undefined;
+  home: Home | undefined;
+  movement: Movement | undefined;
+  room: Room | undefined;
+  toilet: Toilet | undefined;
+  consulter: Consulter | undefined;
+  emergencyContact: EmergencyContact | undefined;
 }
 
-/** 緊急連絡先者情報 */
+/** EmergencyContactメッセージ */
 export interface EmergencyContact {
-  /** 緊急連絡先者ID (PK) */
-  emergencyContactId: string;
-  /** 緊急連絡先者氏名 */
-  fullName: string;
-  /** 緊急連絡先者と被保険者の関係 */
-  relationToInsured: string;
-  /** 緊急連絡先者性別 */
-  gender: string;
-  /** 緊急連絡先者住所 */
+  id: number;
+  name: string;
+  age: number;
+  sex: boolean;
+  telephoneNumber: string;
+  mobileNumber: string;
   address: string;
-  /** 緊急連絡先電話番号 */
-  phone: string;
-  /** 本人との関係 */
-  relationToSelf: string;
+  relationship: string;
 }
 
-/** 相談者情報 */
-export interface Contact {
-  /** 相談者連絡先者ID (PK) */
-  contactId: string;
-  /** 相談者氏名 */
-  fullName: string;
-  /** 相談者と被保険者の関係 */
-  relationToInsured: string;
-  /** 相談者性別 */
-  gender: string;
-  /** 相談者住所 */
+/** Consulterメッセージ */
+export interface Consulter {
+  id: number;
+  name: string;
+  age: number;
+  sex: boolean;
+  telephoneNumber: string;
+  mobileNumber: string;
   address: string;
-  /** 相談者電話番号 */
-  phone: string;
-  /** 本人との関係 */
-  relationToSelf: string;
+  relationship: string;
 }
 
-/** 家族構成情報 */
-export interface FamilyStructure {
-  /** 被保険者番号 (FK) */
-  insuranceNumber: string;
-  /** 家族ID (PK) */
-  familyId: string;
-  /** 氏名 (主たる介護者) */
-  fullName: string;
-  /** 性別 */
-  gender: string;
-  /** 状況 */
-  status: string;
-  /** 家族関係 */
-  familyRelationship: string;
-  /** 特定事項（自治会・ボランティア等） */
-  activityStatus: string;
+/** Familyメッセージ */
+export interface Family {
+  id: number;
+  userId: number;
+  familyId: number;
+  name: string;
+  relationship: string;
+  livingSeparately: string;
+  employment: string;
+  condition: string;
+  memo: string;
 }
 
-/** 住宅情報 */
-export interface ResidenceInfo {
-  /** 被保険者番号 (FK) */
-  insuranceNumber: string;
-  /** 住宅情報ID (PK) */
-  residenceId: string;
-  /** 戸籍上の住宅状況 */
-  householdStatus: string;
-  /** 住宅の状況 */
-  situation: string;
-  /** トイレの有無 */
-  hasToilet: boolean;
-  /** 浴室の有無 */
-  hasBath: boolean;
-  /** 談話室の有無 */
-  hasLivingRoom: boolean;
-  /** 家政婦 */
-  caretakerId: string;
-  /** 配食サービス */
-  deliveryService: string;
-  /** 移動手段 */
-  mobilityStatus: string;
+/** Homeメッセージ */
+export interface Home {
+  id: number;
+  userId: number;
+  style: string;
+  memo: string;
 }
 
-/** トイレ情報 */
-export interface ToiletInfo {
-  /** 被保険者番号 (FK) */
-  insuranceNumber: string;
-  /** 和式or洋式orその他 */
-  toiletType: string;
-  /** 手すりの有無 */
-  hasHandrail: boolean;
-  /** トイレまでの段差の有無 */
-  hasStepsToToilet: boolean;
+/** Roomメッセージ */
+export interface Room {
+  id: number;
+  userId: number;
+  myRoom: boolean;
+  floor: number;
+  elevator: boolean;
+  bed: string;
+  electricBed: string;
+  sunshine: boolean;
+  heater: boolean;
+  cooler: boolean;
 }
 
-/** 浴室情報 */
-export interface BathroomInfo {
-  /** 被保険者番号 (FK) */
-  insuranceNumber: string;
-  /** 浴室の有無 */
-  hasBathroom: boolean;
-  /** 手すりの有無 */
-  hasHandrail: boolean;
-  /** 浴室までの段差の有無 */
-  hasStepsToBathroom: boolean;
+/** Movementメッセージ */
+export interface Movement {
+  id: number;
+  userId: number;
+  assistiveTechnology: boolean;
+  wheelchair: boolean;
+  electricWheelchair: boolean;
+  stick: boolean;
+  walker: boolean;
+  other: string;
+  indoor: boolean;
 }
 
-/** 移動手段情報 */
-export interface MobilityInfo {
-  /** 被保険者番号 (FK) */
-  insuranceNumber: string;
-  /** 福祉機器の使用有無 */
-  usesWelfareEquipment: boolean;
-  /** 車いすの有無 */
-  usesWheelchair: boolean;
-  /** 電動車いすの有無 */
-  usesElectricWheelchair: boolean;
-  /** 杖の有無 */
-  usesCane: boolean;
-  /** 歩行器の有無 */
-  canWalk: boolean;
-  /** その他の移動手段 */
-  otherMobilityAid: string;
-  /** 室内のみか室外も含むか */
-  usesIndoorOrOutdoor: boolean;
+/** Equipmentメッセージ */
+export interface Equipment {
+  id: number;
+  userId: number;
+  cooktop: boolean;
+  heater: string;
+}
+
+/** Toiletメッセージ */
+export interface Toilet {
+  id: number;
+  userId: number;
+  style: string;
+  handrail: boolean;
+  step: boolean;
+}
+
+/** Bathroomメッセージ */
+export interface Bathroom {
+  id: number;
+  userId: number;
+  existence: boolean;
+  handrail: boolean;
+  step: boolean;
+}
+
+/** Serviceメッセージ */
+export interface Service {
+  id: number;
+  insuredId: number;
+  name: string;
+  date: string;
+  athome: AtHome | undefined;
+  dailylifeindependenceLevel: DailyLifeIndependenceLevel | undefined;
+  disabilitynotebook: DisabilityNotebook | undefined;
+  eligibility: Eligibility | undefined;
+  independencesupportmedicalexpenses: IndependenceSupportMedicalExpenses | undefined;
+  mentaldisabilitycertificate: MentalDisabilityCertificate | undefined;
+  specialeducationrecordbook: SpecialEducationRecordBook | undefined;
+  using: Using | undefined;
+  wants: Wants | undefined;
+}
+
+/** Usingメッセージ */
+export interface Using {
+  id: number;
+  userId: number;
+  detail: string;
+  provider: string;
+  memo: string;
+}
+
+/** Wantsメッセージ */
+export interface Wants {
+  id: number;
+  userId: number;
+  detail: string;
+  provider: string;
+  memo: string;
+}
+
+/** Eligibilityメッセージ */
+export interface Eligibility {
+  id: number;
+  serviceId: number;
+  type: string;
+  done: boolean;
+  level: Level;
+  date: string;
+}
+
+/** DisabilityNotebookメッセージ */
+export interface DisabilityNotebook {
+  id: number;
+  userId: number;
+  possess: boolean;
+  grade: number;
+  date: string;
+}
+
+/** SpecialEducationRecordBookメッセージ */
+export interface SpecialEducationRecordBook {
+  id: number;
+  userId: number;
+  possess: boolean;
+  grade: number;
+  date: string;
+}
+
+/** MentalDisabilityCertificateメッセージ */
+export interface MentalDisabilityCertificate {
+  id: number;
+  userId: number;
+  possess: boolean;
+  grade: number;
+  date: string;
+}
+
+/** IndependenceSupportMedicalExpensesメッセージ */
+export interface IndependenceSupportMedicalExpenses {
+  id: number;
+  userId: number;
+  possess: boolean;
+  grade: number;
+}
+
+/** DailyLifeIndependenceLevelメッセージ */
+export interface DailyLifeIndependenceLevel {
+  id: number;
+  userId: number;
+  disabledElderly: string;
+  dementia: string;
+}
+
+/** AtHomeメッセージ */
+export interface AtHome {
+  id: number;
+  userId: number;
+  menu: string;
+  date: string;
 }
 
 export const ASSESSMENT_PACKAGE_NAME = "assessment";
