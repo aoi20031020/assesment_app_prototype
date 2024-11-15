@@ -9,21 +9,12 @@ service AssessmentService {
 
 // GetAssessmentByInsuranceNumberのリクエストメッセージ
 message GetAssessmentByInsuranceNumberRequest {
-  string insuranceNumber = 1; // 被保険者番号
+  int32 insuranceNumber = 1; // 被保険者番号
 }
 
 // GetAssessmentByInsuranceNumberのレスポンスメッセージ
 message GetAssessmentByInsuranceNumberResponse {
   User user = 1;
-  EmergencyContact emergencyContact = 2;
-  Consulter consulter = 3;
-  Family family = 4;
-  Home home = 5;
-  Room room = 6;
-  Movement movement = 7;
-  Equipment equipment = 8;
-  Toilet toilet = 9;
-  Bathroom bathroom = 10;
 }
 
 // CreateAssessmentのリクエストメッセージ
@@ -40,220 +31,200 @@ message CreateAssessmentResponse {
 
 // Userメッセージ
 message User {
-  int32 id = 1;
-  int32 insuredId = 2;
-  string name = 3;
-  string telephoneNumber = 4;
-  string mobileNumber = 5;
-  int32 age = 6;
-  bool sex = 7;
-  string address = 8;
-  string requestedDate = 9;
-  int32 emergencyId = 10;
-  int32 consulterId = 11;
-  Bathroom bathroom = 12;
-  Equipment equipment = 13;
-  Family family = 14;
-  Home home = 15;
-  Movement movement = 16;
-  Room room = 17;
-  Toilet toilet = 18;
-  Consulter consulter = 19;
-  EmergencyContact emergencyContact = 20;
+  int32 insuredId = 1;
+  string name = 2;
+  string telephoneNumber = 3;
+  string mobileNumber = 4;
+  int32 age = 5;
+  bool sex = 6;
+  string address = 7;
+  string requestedDate = 8;
+  int32 emergencyId = 9;
+  int32 consulterId = 10;
+  Bathroom bathroom = 11;
+  Equipment equipment = 12;
+  Family family = 13;
+  Home home = 14;
+  Movement movement = 15;
+  Room room = 16;
+  Toilet toilet = 17;
+  Consulter consulter = 18;
+  EmergencyContact emergencyContact = 19;
 }
 
 // EmergencyContactメッセージ
 message EmergencyContact {
-  int32 id = 1;
-  string name = 2;
-  int32 age = 3;
-  bool sex = 4;
-  string telephoneNumber = 5;
-  string mobileNumber = 6;
-  string address = 7;
-  string relationship = 8;
+  string name = 1;
+  int32 age = 2;
+  bool sex = 3;
+  string telephoneNumber = 4;
+  string mobileNumber = 5;
+  string address = 6;
+  string relationship = 7;
 }
 
 // Consulterメッセージ
 message Consulter {
-  int32 id = 1;
-  string name = 2;
-  int32 age = 3;
-  bool sex = 4;
-  string telephoneNumber = 5;
-  string mobileNumber = 6;
-  string address = 7;
-  string relationship = 8;
+  string name = 1;
+  int32 age = 2;
+  bool sex = 3;
+  string telephoneNumber = 4;
+  string mobileNumber = 5;
+  string address = 6;
+  string relationship = 7;
 }
 
 // Familyメッセージ
 message Family {
-  int32 id = 1;
-  int32 userId = 2;
-  int32 familyId = 3;
-  string name = 4;
-  string relationship = 5;
-  string livingSeparately = 6;
-  string employment = 7;
-  string condition = 8;
-  string memo = 9;
+  int32 userId = 1;
+  int32 familyId = 2;
+  string name = 3;
+  string relationship = 4;
+  string livingSeparately = 5;
+  string employment = 6;
+  string condition = 7;
+  string memo = 8;
 }
 
 // Homeメッセージ
 message Home {
-  int32 id = 1;
-  int32 userId = 2;
-  string style = 3;
-  string memo = 4;
+  int32 userId = 1;
+  string style = 2;
+  string memo = 3;
 }
 
 // Roomメッセージ
 message Room {
-  int32 id = 1;
-  int32 userId = 2;
-  bool myRoom = 3;
-  int32 floor = 4;
-  bool elevator = 5;
-  string bed = 6;
-  string electricBed = 7;
-  bool sunshine = 8;
-  bool heater = 9;
-  bool cooler = 10;
+  int32 userId = 1;
+  bool myRoom = 2;
+  int32 floor = 3;
+  bool elevator = 4;
+  string bed = 5;
+  string electricBed = 6;
+  bool sunshine = 7;
+  bool heater = 8;
+  bool cooler = 9;
 }
 
 // Movementメッセージ
 message Movement {
-  int32 id = 1;
-  int32 userId = 2;
-  bool assistiveTechnology = 3;
-  bool wheelchair = 4;
-  bool electricWheelchair = 5;
-  bool stick = 6;
-  bool walker = 7;
-  string other = 8;
-  bool indoor = 9;
+  int32 userId = 1;
+  bool assistiveTechnology = 2;
+  bool wheelchair = 3;
+  bool electricWheelchair = 4;
+  bool stick = 5;
+  bool walker = 6;
+  string other = 7;
+  bool indoor = 8;
 }
 
 // Equipmentメッセージ
 message Equipment {
-  int32 id = 1;
-  int32 userId = 2;
-  bool cooktop = 3;
-  string heater = 4;
+  int32 userId = 1;
+  bool cooktop = 2;
+  string heater = 3;
 }
 
 // Toiletメッセージ
 message Toilet {
-  int32 id = 1;
-  int32 userId = 2;
-  string style = 3;
-  bool handrail = 4;
-  bool step = 5;
+  int32 userId = 1;
+  string style = 2;
+  bool handrail = 3;
+  bool step = 4;
 }
 
 // Bathroomメッセージ
 message Bathroom {
-  int32 id = 1;
-  int32 userId = 2;
-  bool existence = 3;
-  bool handrail = 4;
-  bool step = 5;
+  int32 userId = 1;
+  bool existence = 2;
+  bool handrail = 3;
+  bool step = 4;
 }
 
 // Serviceメッセージ
 message Service {
-  int32 id = 1;
-  int32 insuredId = 2;
-  string name = 3;
-  string date = 4;
-  AtHome athome = 5;
-  DailyLifeIndependenceLevel dailylifeindependenceLevel = 6;
-  DisabilityNotebook disabilitynotebook = 7;
-  Eligibility eligibility = 8;
-  IndependenceSupportMedicalExpenses independencesupportmedicalexpenses = 9;
-  MentalDisabilityCertificate mentaldisabilitycertificate = 10;
-  SpecialEducationRecordBook specialeducationrecordbook = 11;
-  Using using = 12;
-  Wants wants = 13;
+  int32 insuredId = 1;
+  string name = 2;
+  string date = 3;
+  AtHome athome = 4;
+  DailyLifeIndependenceLevel dailylifeindependenceLevel = 5;
+  DisabilityNotebook disabilitynotebook = 6;
+  Eligibility eligibility = 7;
+  IndependenceSupportMedicalExpenses independencesupportmedicalexpenses = 8;
+  MentalDisabilityCertificate mentaldisabilitycertificate = 9;
+  SpecialEducationRecordBook specialeducationrecordbook = 10;
+  Using using = 11;
+  Wants wants = 12;
 }
 
 // Usingメッセージ
 message Using {
-  int32 id = 1;
-  int32 userId = 2;
-  string detail = 3;
-  string provider = 4;
-  string memo = 5;
+  int32 userId = 1;
+  string detail = 2;
+  string provider = 3;
+  string memo = 4;
 }
 
 // Wantsメッセージ
 message Wants {
-  int32 id = 1;
-  int32 userId = 2;
-  string detail = 3;
-  string provider = 4;
-  string memo = 5;
+  int32 userId = 1;
+  string detail = 2;
+  string provider = 3;
+  string memo = 4;
 }
 
 // Eligibilityメッセージ
 message Eligibility {
-  int32 id = 1;
-  int32 serviceId = 2;
-  string type = 3;
-  bool done = 4;
-  Level level = 5;
-  string date = 6;
+  int32 serviceId = 1;
+  string type = 2;
+  bool done = 3;
+  Level level = 4;
+  string date = 5;
 }
 
 // DisabilityNotebookメッセージ
 message DisabilityNotebook {
-  int32 id = 1;
-  int32 userId = 2;
-  bool possess = 3;
-  int32 grade = 4;
-  string date = 5;
+  int32 userId = 1;
+  bool possess = 2;
+  int32 grade = 3;
+  string date = 4;
 }
 
 // SpecialEducationRecordBookメッセージ
 message SpecialEducationRecordBook {
-  int32 id = 1;
-  int32 userId = 2;
-  bool possess = 3;
-  int32 grade = 4;
-  string date = 5;
+  int32 userId = 1;
+  bool possess = 2;
+  int32 grade = 3;
+  string date = 4;
 }
 
 // MentalDisabilityCertificateメッセージ
 message MentalDisabilityCertificate {
-  int32 id = 1;
-  int32 userId = 2;
-  bool possess = 3;
-  int32 grade = 4;
-  string date = 5;
+  int32 userId = 1;
+  bool possess = 2;
+  int32 grade = 3;
+  string date = 4;
 }
 
 // IndependenceSupportMedicalExpensesメッセージ
 message IndependenceSupportMedicalExpenses {
-  int32 id = 1;
-  int32 userId = 2;
-  bool possess = 3;
-  int32 grade = 4;
+  int32 userId = 1;
+  bool possess = 2;
+  int32 grade = 3;
 }
 
 // DailyLifeIndependenceLevelメッセージ
 message DailyLifeIndependenceLevel {
-  int32 id = 1;
-  int32 userId = 2;
-  string disabledElderly = 3;
-  string dementia = 4;
+  int32 userId = 1;
+  string disabledElderly = 2;
+  string dementia = 3;
 }
 
 // AtHomeメッセージ
 message AtHome {
-  int32 id = 1;
-  int32 userId = 2;
-  string menu = 3;
-  string date = 4;
+  int32 userId = 1;
+  string menu = 2;
+  string date = 3;
 }
 
 // Level enum

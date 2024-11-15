@@ -32,21 +32,12 @@ export enum Tooth {
 /** GetAssessmentByInsuranceNumberのリクエストメッセージ */
 export interface GetAssessmentByInsuranceNumberRequest {
   /** 被保険者番号 */
-  insuranceNumber: string;
+  insuranceNumber: number;
 }
 
 /** GetAssessmentByInsuranceNumberのレスポンスメッセージ */
 export interface GetAssessmentByInsuranceNumberResponse {
   user: User | undefined;
-  emergencyContact: EmergencyContact | undefined;
-  consulter: Consulter | undefined;
-  family: Family | undefined;
-  home: Home | undefined;
-  room: Room | undefined;
-  movement: Movement | undefined;
-  equipment: Equipment | undefined;
-  toilet: Toilet | undefined;
-  bathroom: Bathroom | undefined;
 }
 
 /** CreateAssessmentのリクエストメッセージ */
@@ -63,7 +54,6 @@ export interface CreateAssessmentResponse {
 
 /** Userメッセージ */
 export interface User {
-  id: number;
   insuredId: number;
   name: string;
   telephoneNumber: string;
@@ -87,7 +77,6 @@ export interface User {
 
 /** EmergencyContactメッセージ */
 export interface EmergencyContact {
-  id: number;
   name: string;
   age: number;
   sex: boolean;
@@ -99,7 +88,6 @@ export interface EmergencyContact {
 
 /** Consulterメッセージ */
 export interface Consulter {
-  id: number;
   name: string;
   age: number;
   sex: boolean;
@@ -111,7 +99,6 @@ export interface Consulter {
 
 /** Familyメッセージ */
 export interface Family {
-  id: number;
   userId: number;
   familyId: number;
   name: string;
@@ -124,7 +111,6 @@ export interface Family {
 
 /** Homeメッセージ */
 export interface Home {
-  id: number;
   userId: number;
   style: string;
   memo: string;
@@ -132,7 +118,6 @@ export interface Home {
 
 /** Roomメッセージ */
 export interface Room {
-  id: number;
   userId: number;
   myRoom: boolean;
   floor: number;
@@ -146,7 +131,6 @@ export interface Room {
 
 /** Movementメッセージ */
 export interface Movement {
-  id: number;
   userId: number;
   assistiveTechnology: boolean;
   wheelchair: boolean;
@@ -159,7 +143,6 @@ export interface Movement {
 
 /** Equipmentメッセージ */
 export interface Equipment {
-  id: number;
   userId: number;
   cooktop: boolean;
   heater: string;
@@ -167,7 +150,6 @@ export interface Equipment {
 
 /** Toiletメッセージ */
 export interface Toilet {
-  id: number;
   userId: number;
   style: string;
   handrail: boolean;
@@ -176,7 +158,6 @@ export interface Toilet {
 
 /** Bathroomメッセージ */
 export interface Bathroom {
-  id: number;
   userId: number;
   existence: boolean;
   handrail: boolean;
@@ -185,7 +166,6 @@ export interface Bathroom {
 
 /** Serviceメッセージ */
 export interface Service {
-  id: number;
   insuredId: number;
   name: string;
   date: string;
@@ -202,7 +182,6 @@ export interface Service {
 
 /** Usingメッセージ */
 export interface Using {
-  id: number;
   userId: number;
   detail: string;
   provider: string;
@@ -211,7 +190,6 @@ export interface Using {
 
 /** Wantsメッセージ */
 export interface Wants {
-  id: number;
   userId: number;
   detail: string;
   provider: string;
@@ -220,7 +198,6 @@ export interface Wants {
 
 /** Eligibilityメッセージ */
 export interface Eligibility {
-  id: number;
   serviceId: number;
   type: string;
   done: boolean;
@@ -230,7 +207,6 @@ export interface Eligibility {
 
 /** DisabilityNotebookメッセージ */
 export interface DisabilityNotebook {
-  id: number;
   userId: number;
   possess: boolean;
   grade: number;
@@ -239,7 +215,6 @@ export interface DisabilityNotebook {
 
 /** SpecialEducationRecordBookメッセージ */
 export interface SpecialEducationRecordBook {
-  id: number;
   userId: number;
   possess: boolean;
   grade: number;
@@ -248,7 +223,6 @@ export interface SpecialEducationRecordBook {
 
 /** MentalDisabilityCertificateメッセージ */
 export interface MentalDisabilityCertificate {
-  id: number;
   userId: number;
   possess: boolean;
   grade: number;
@@ -257,7 +231,6 @@ export interface MentalDisabilityCertificate {
 
 /** IndependenceSupportMedicalExpensesメッセージ */
 export interface IndependenceSupportMedicalExpenses {
-  id: number;
   userId: number;
   possess: boolean;
   grade: number;
@@ -265,7 +238,6 @@ export interface IndependenceSupportMedicalExpenses {
 
 /** DailyLifeIndependenceLevelメッセージ */
 export interface DailyLifeIndependenceLevel {
-  id: number;
   userId: number;
   disabledElderly: string;
   dementia: string;
@@ -273,7 +245,6 @@ export interface DailyLifeIndependenceLevel {
 
 /** AtHomeメッセージ */
 export interface AtHome {
-  id: number;
   userId: number;
   menu: string;
   date: string;
