@@ -77,6 +77,7 @@ export interface User {
 
 /** EmergencyContactメッセージ */
 export interface EmergencyContact {
+  emergencyId: number;
   name: string;
   age: number;
   sex: boolean;
@@ -88,6 +89,7 @@ export interface EmergencyContact {
 
 /** Consulterメッセージ */
 export interface Consulter {
+  consulterId: number;
   name: string;
   age: number;
   sex: boolean;
@@ -198,7 +200,7 @@ export interface Wants {
 
 /** Eligibilityメッセージ */
 export interface Eligibility {
-  serviceId: number;
+  userId: number;
   type: string;
   done: boolean;
   level: Level;

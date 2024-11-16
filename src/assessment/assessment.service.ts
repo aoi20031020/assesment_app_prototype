@@ -19,6 +19,7 @@ export class AssessmentService {
   async getAssessmentByInsuranceNumber(
     data: GetAssessmentByInsuranceNumberRequest,
   ): Promise<GetAssessmentByInsuranceNumberResponse> {
+    console.log('service');
     const user = await this.userAssessmentRepository.findByInsuranceNumber(
       data.insuranceNumber,
     );
@@ -30,6 +31,7 @@ export class AssessmentService {
   async createAssessment(
     data: CreateAssessmentRequest,
   ): Promise<CreateAssessmentResponse> {
+    console.log('service');
     const user_data: User =
       await this.userAssessmentRepository.createAssessment(
         data.user.insuredId,
