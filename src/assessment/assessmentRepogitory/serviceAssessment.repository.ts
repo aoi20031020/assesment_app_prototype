@@ -34,6 +34,7 @@ export class ServiceAssessmentRepository {
     using: Using,
     wants: Wants,
   ): Promise<Service> {
+    console.log('ServiceRepository');
     const service_data = await this.prisma.service.create({
       data: {
         insuredId,
@@ -64,9 +65,9 @@ export class ServiceAssessmentRepository {
     );
     const eligibility_data = await this.prisma.eligibility.create({
       data: {
-        serviceId: service_data.id,
+        userId: service_data.id,
         ...eligibility,
-        level: eligibility.level as unknown as $Enums.Level,
+        level: $Enums.Level[eligibility.level], // 列挙型の値を渡す
       },
     });
     const independenceSupportMedicalExpenses_data =

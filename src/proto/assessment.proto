@@ -54,24 +54,26 @@ message User {
 
 // EmergencyContactメッセージ
 message EmergencyContact {
-  string name = 1;
-  int32 age = 2;
-  bool sex = 3;
-  string telephoneNumber = 4;
-  string mobileNumber = 5;
-  string address = 6;
-  string relationship = 7;
+  int32 emergencyId = 1;
+  string name = 2;
+  int32 age = 3;
+  bool sex = 4;
+  string telephoneNumber = 5;
+  string mobileNumber = 6;
+  string address = 7;
+  string relationship = 8;
 }
 
 // Consulterメッセージ
 message Consulter {
-  string name = 1;
-  int32 age = 2;
-  bool sex = 3;
-  string telephoneNumber = 4;
-  string mobileNumber = 5;
-  string address = 6;
-  string relationship = 7;
+  int32 consulterId = 1;
+  string name = 2;
+  int32 age = 3;
+  bool sex = 4;
+  string telephoneNumber = 5;
+  string mobileNumber = 6;
+  string address = 7;
+  string relationship = 8;
 }
 
 // Familyメッセージ
@@ -175,7 +177,7 @@ message Wants {
 
 // Eligibilityメッセージ
 message Eligibility {
-  int32 serviceId = 1;
+  int32 userId = 1;
   string type = 2;
   bool done = 3;
   Level level = 4;

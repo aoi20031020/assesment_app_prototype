@@ -1,0 +1,145 @@
+{
+  "user": {
+    "insuredId": 54321,
+    "name": "Bob Johnson",
+    "telephoneNumber": "345-678-9012",
+    "mobileNumber": "987-654-3210",
+    "age": 40,
+    "sex": true,
+    "address": "789 Maple St",
+    "requestedDate": "2023-12-15T00:00:00Z",
+    "emergencyId": 5,
+    "consulterId": 6,
+    "bathroom": {
+      "userId": 54321,
+      "existence": true,
+      "handrail": false,
+      "step": true
+    },
+    "equipment": {
+      "userId": 54321,
+      "cooktop": true,
+      "heater": "electric"
+    },
+    "family": {
+      "userId": 54321,
+      "familyId": 3,
+      "name": "Alice Johnson",
+      "relationship": "sister",
+      "livingSeparately": "no",
+      "employment": "teacher",
+      "condition": "healthy",
+      "memo": "none"
+    },
+    "home": {
+      "userId": 54321,
+      "style": "condo",
+      "memo": "none"
+    },
+    "movement": {
+      "userId": 54321,
+      "assistiveTechnology": true,
+      "wheelchair": false,
+      "electricWheelchair": false,
+      "stick": true,
+      "walker": false,
+      "other": "none",
+      "indoor": true
+    },
+    "room": {
+      "userId": 54321,
+      "myRoom": true,
+      "floor": 3,
+      "elevator": true,
+      "bed": "queen",
+      "electricBed": "no",
+      "sunshine": true,
+      "heater": true,
+      "cooler": true
+    },
+    "toilet": {
+      "userId": 54321,
+      "style": "western",
+      "handrail": true,
+      "step": false
+    },
+    "consulter": {
+      "consulterId": 6,
+      "name": "Dr. Brown",
+      "age": 55,
+      "sex": true,
+      "telephoneNumber": "987-654-3210",
+      "mobileNumber": "345-678-9012",
+      "address": "123 Birch St",
+      "relationship": "doctor"
+    },
+    "emergencyContact": {
+      "emergencyId": 5,
+      "name": "Charlie Johnson",
+      "age": 60,
+      "sex": true,
+      "telephoneNumber": "345-678-9012",
+      "mobileNumber": "987-654-3210",
+      "address": "789 Maple St",
+      "relationship": "father"
+    }
+  },
+  "service": {
+    "insuredId": 54321,
+    "name": "Elderly Care Service",
+    "date": "2023-12-15T00:00:00Z",
+    "athome": {
+      "userId": 54321,
+      "menu": "weekly assistance",
+      "date": "2023-12-15T00:00:00Z"
+    },
+    "dailylifeindependenceLevel": {
+      "userId": 54321,
+      "disabledElderly": "level 3",
+      "dementia": "mild"
+    },
+    "disabilitynotebook": {
+      "userId": 54321,
+      "possess": false,
+      "grade": 1,
+      "date": "2023-12-15T00:00:00Z"
+    },
+    "eligibility": {
+      "userId": 54321,
+      "type": "partial",
+      "done": false,
+      "level": "VALUE2",
+      "date": "2023-12-15T00:00:00Z"
+    },
+    "independencesupportmedicalexpenses": {
+      "userId": 54321,
+      "possess": false,
+      "grade": 2
+    },
+    "mentaldisabilitycertificate": {
+      "userId": 54321,
+      "possess": true,
+      "grade": 3,
+      "date": "2023-12-15T00:00:00Z"
+    },
+    "specialeducationrecordbook": {
+      "userId": 54321,
+      "possess": false,
+      "grade": 2,
+      "date": "2023-12-15T00:00:00Z"
+    },
+    "using": {
+      "userId": 54321,
+      "detail": "weekly assistance",
+      "provider": "Elderly Care Inc.",
+      "memo": "none"
+    },
+    "wants": {
+      "userId": 54321,
+      "detail": "additional support",
+      "provider": "Elderly Care Inc.",
+      "memo": "none"
+    }
+  }
+}
+

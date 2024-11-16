@@ -1,16 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../../prisma/prisma.service';
-// import {
-//   EmergencyContact,
-//   Consulter,
-//   Family,
-//   Home,
-//   Room,
-//   Movement,
-//   Equipment,
-//   Toilet,
-//   Bathroom,
-// } from '@prisma/client';
 import {
   User,
   EmergencyContact,
@@ -58,6 +47,7 @@ export class UserAssessmentRepository {
 
   // 被保険者番号で評価を取得
   async findByInsuranceNumber(insuranceNumber: number): Promise<User> {
+    console.log('UserRepository');
     const user = await this.prisma.user.findUnique({
       where: { insuredId: insuranceNumber },
       include: {
@@ -104,6 +94,20 @@ export class UserAssessmentRepository {
     consulter: Consulter,
     emergencyContact: EmergencyContact,
   ): Promise<User> {
+    console.log('UserRepository');
+
+    // Consulterをupsert
+    const consulter_data = await this.prisma.consulter.upsert({
+      where: { consulterId: consulterId },
+      update: { ...consulter },
+      create: { ...consulter },
+    });
+    // EmergencyContactをupsert
+    const emergencyContact_data = await this.prisma.emergencyContact.upsert({
+      where: { emergencyId: emergencyId },
+      update: { ...emergencyContact },
+      create: { ...emergencyContact },
+    });
     const user_data = await this.prisma.user.create({
       data: {
         insuredId,
@@ -119,66 +123,58 @@ export class UserAssessmentRepository {
       },
     });
 
-    const bathroom_data = await this.prisma.bathroom.create({
-      data: {
-        userId: user_data.id,
-        ...bathroom,
-      },
-    });
-
-    const equipment_data = await this.prisma.equipment.create({
-      data: {
-        userId: user_data.id,
-        ...equipment,
-      },
-    });
-
-    const family_data = await this.prisma.family.create({
-      data: {
-        userId: user_data.id,
-        ...family,
-      },
-    });
-
-    const home_data = await this.prisma.home.create({
-      data: {
-        userId: user_data.id,
-        ...home,
-      },
-    });
-
-    const movement_data = await this.prisma.movement.create({
-      data: {
-        userId: user_data.id,
-        ...movement,
-      },
-    });
-
-    const room_data = await this.prisma.room.create({
-      data: {
-        userId: user_data.id,
-        ...room,
-      },
-    });
-
-    const toilet_data = await this.prisma.toilet.create({
-      data: {
-        userId: user_data.id,
-        ...toilet,
-      },
-    });
-
-    const consulter_data = await this.prisma.consulter.create({
-      data: {
-        ...consulter,
-      },
-    });
-
-    const emergencyContact_data = await this.prisma.emergencyContact.create({
-      data: {
-        ...emergencyContact,
-      },
-    });
+    const [
+      bathroom_data,
+      equipment_data,
+      family_data,
+      home_data,
+      movement_data,
+      room_data,
+      toilet_data,
+    ] = await Promise.all([
+      this.prisma.bathroom.create({
+        data: {
+          userId: user_data.id,
+          ...bathroom,
+        },
+      }),
+      this.prisma.equipment.create({
+        data: {
+          userId: user_data.id,
+          ...equipment,
+        },
+      }),
+      this.prisma.family.create({
+        data: {
+          userId: user_data.id,
+          ...family,
+        },
+      }),
+      this.prisma.home.create({
+        data: {
+          userId: user_data.id,
+          ...home,
+        },
+      }),
+      this.prisma.movement.create({
+        data: {
+          userId: user_data.id,
+          ...movement,
+        },
+      }),
+      this.prisma.room.create({
+        data: {
+          userId: user_data.id,
+          ...room,
+        },
+      }),
+      this.prisma.toilet.create({
+        data: {
+          userId: user_data.id,
+          ...toilet,
+        },
+      }),
+    ]);
 
     return {
       ...user_data,

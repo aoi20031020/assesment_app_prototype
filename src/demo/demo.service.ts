@@ -20,6 +20,7 @@ export class DemoService implements DemoServiceController {
   ) {}
 
   async getAllUser(): Promise<GetAllUserResponse> {
+    console.log('service');
     const users = await this.demoRepository.findAll();
     if (!users) {
       throw new Error('Users not found');
@@ -28,6 +29,7 @@ export class DemoService implements DemoServiceController {
   }
 
   async getUserById(request: GetUserByIdRequest): Promise<GetUserByIdResponse> {
+    console.log('service');
     const user = await this.demoRepository.findById(request.id); // リクエストからIDを取得
     if (!user) {
       throw new Error('User not found'); // ユーザーが見つからない場合はエラーをスロー
@@ -36,6 +38,7 @@ export class DemoService implements DemoServiceController {
   }
 
   async createUser(request: CreateUserRequest): Promise<User> {
+    console.log('service');
     const newUser = await this.demoRepository.createUser(
       request.name,
       request.age,
@@ -45,6 +48,7 @@ export class DemoService implements DemoServiceController {
   }
 
   async deleteUser(request: DeleteUserRequest): Promise<DeleteUserResponse> {
+    console.log('service');
     const user = await this.demoRepository.deleteUser(request.id); // リクエストからIDを取得
     if (!user) {
       throw new Error('User not found'); // ユーザーが見つからない場合はエラーをスロー
